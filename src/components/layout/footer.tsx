@@ -48,20 +48,20 @@ export async function Footer() {
   const year = await getCurrentYear();
 
   return (
-    <footer className="mt-20 border-t border-line-soft">
+    <footer className="site-footer mt-20 border-t border-line-soft">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-ink-muted">
           © {year} {siteConfig.fullName}. All rights reserved.
         </p>
 
-        <ul className="flex items-center gap-5 text-sm text-ink-body">
+        <ul className="flex items-center gap-1 text-sm text-ink-body">
           {siteConfig.socials.github && (
             <li>
               <a
                 href={`https://github.com/${siteConfig.socials.github}`}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-700 dark:hover:text-brand-300"
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 transition-colors hover:text-brand-700 dark:hover:text-brand-300"
               >
                 <GitHubIcon />
                 GitHub
@@ -71,7 +71,7 @@ export async function Footer() {
           <li>
             <a
               href={`mailto:${siteConfig.email}`}
-              className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-700 dark:hover:text-brand-300"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 transition-colors hover:text-brand-700 dark:hover:text-brand-300"
             >
               <MailIcon />
               Email
@@ -80,7 +80,7 @@ export async function Footer() {
           <li>
             <Link
               href="/cv"
-              className="transition-colors hover:text-brand-700 dark:hover:text-brand-300"
+              className="inline-flex min-h-11 items-center rounded-lg px-3 transition-colors hover:text-brand-700 dark:hover:text-brand-300"
             >
               CV
             </Link>

@@ -1,33 +1,30 @@
-import { Badge } from "@/components/ui/badge";
-import { ButtonLink } from "@/components/ui/button-link";
-import { siteConfig } from "@/lib/site.config";
+import type { Metadata } from "next";
+
+import { AboutPreview } from "@/components/sections/about-preview";
+import { Contact } from "@/components/sections/contact";
+import { Hero } from "@/components/sections/hero";
+import { ProjectsPreview } from "@/components/sections/projects-preview";
+
+export const metadata: Metadata = {
+  description:
+    "Fullstack developer focused on building clean, fast, and maintainable web systems.",
+};
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-20">
-      <Badge tone="brand">
-        {siteConfig.availableForWork
-          ? "Available for work"
-          : "Open to opportunities"}
-      </Badge>
+    <div className="mx-auto max-w-5xl px-6">
+      <Hero />
 
-      <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
-        Hi, I&apos;m {siteConfig.name}.
-      </h1>
+      <div className="space-y-16 border-t border-line-soft pt-16">
+        <AboutPreview />
+      </div>
 
-      <p className="mt-4 max-w-xl text-lg text-ink-body">
-        {siteConfig.tagline}
-      </p>
+      <div className="border-t border-line-soft pt-16">
+        <ProjectsPreview />
+      </div>
 
-      <p className="mt-4 max-w-xl text-ink-muted">{siteConfig.description}</p>
-
-      <div className="mt-8 flex flex-wrap gap-3">
-        <ButtonLink href="/projects" size="lg">
-          View projects
-        </ButtonLink>
-        <ButtonLink href="/about" variant="secondary" size="lg">
-          About me
-        </ButtonLink>
+      <div className="border-t border-line-soft pt-16">
+        <Contact />
       </div>
     </div>
   );

@@ -136,3 +136,53 @@
     /* biome-ignore-end lint/complexity/noImportantStyles: must override third-party animation specificity */
   }
 }
+
+/*
+ * Print styles for /cv. Strip the site chrome so the printed page is just
+ * the resume content on a white background.
+ */
+@media print {
+  @page {
+    margin: 16mm;
+  }
+
+  html,
+  body {
+    /* biome-ignore-start lint/complexity/noImportantStyles: print styles must override dark-mode background specificity */
+    background-color: #fff !important;
+    color: #000 !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: print styles must override dark-mode background specificity */
+  }
+
+  /*
+   * Hide only the site chrome, not page content. A bare `header` selector
+   * would also match <PageHeader>, which is part of the CV we want to print.
+   */
+  .site-header,
+  .site-footer,
+  .print\:hidden {
+    /* biome-ignore lint/complexity/noImportantStyles: print styles must override utility display classes */
+    display: none !important;
+  }
+
+  main {
+    max-width: none;
+    padding: 0;
+  }
+
+  main > div {
+    max-width: none;
+    padding: 0;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Avoid splitting a role entry across a page break. */
+  .cv-body section,
+  .cv-body li {
+    break-inside: avoid;
+  }
+}

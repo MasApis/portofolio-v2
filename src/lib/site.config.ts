@@ -29,9 +29,9 @@ export const siteConfig = {
   mainNav: [
     { href: "/", label: "Home" },
     { href: "/projects", label: "Projects" },
-    { href: "/blog", label: "Blog" },
     { href: "/labs", label: "Labs" },
     { href: "/about", label: "About" },
+    // /blog is added in F3 once the blog routes exist
   ],
 
   skills: [
