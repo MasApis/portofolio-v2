@@ -1,34 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Abdul Hafidz — Portfolio
 
-## Getting Started
+Personal portfolio site built with Next.js 16, React 19, and Tailwind CSS 4.
 
-First, run the development server:
+- **Production:** https://pundong.my.id
+- **Stack:** Next.js (App Router, Cache Components, Turbopack) · TypeScript · Tailwind CSS 4 · MDX
+- **Lint/format:** Biome
+- **Hosting:** Vercel · DNS: Netlify
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-## Learn More
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the dev server with Turbopack |
+| `npm run build` | Production build |
+| `npm run start` | Run the production server |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run lint` | Biome check |
+| `npm run lint:fix` | Biome check with `--write` |
+| `npm run format` | Biome format |
+| `npm run verify` | typecheck + lint + build (the CI command) |
 
-To learn more about Next.js, take a look at the following resources:
+## Project layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+content/          MDX posts and project case studies
+public/           Static assets served from the root
+src/app/          App Router routes, layout, metadata
+src/components/   UI primitives, layout, sections, blog
+src/content/      Zod schemas and content loaders
+src/lib/          site.config.ts (single source of truth), utilities
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Personalising the site
 
-## Deploy on Vercel
+Almost all content lives in **one file**: `src/lib/site.config.ts`. Edit
+name, role, links, skills, and experience there. Drop your avatar into
+`public/images/avatar.jpg`. Nothing else needs to change.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Adding a blog post
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Create `content/blog/<slug>.mdx` with frontmatter in JSON block format:
+
+```mdx
+---
+title: My First Post
+description: A short summary that shows up on the index and meta tags.
+date: 2026-01-15
+tags: [nextjs, tailwind]
+draft: false
+---
+
+Your content in MDX.
+```
+
+Frontmatter is a JSON block (`{...}` between the `---` fences), parsed by
+`src/content/schema.ts` at build time. Invalid frontmatter fails the build.
+
+## Deployment
+
+Pushes to `main` deploy automatically via Vercel. See `.env.example` for
+required environment variables.
