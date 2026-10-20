@@ -1,1 +1,138 @@
 @import "tailwindcss";
+
+/* Dark mode is class-based, driven by next-themes. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens.
+ *
+ * `brand` is the green-leaf accent scale (OKLCH hue ~152). Hue 152 sits
+ * between mint and emerald, which reads as leaf green rather than neon.
+ *
+ * `inline` makes the utility resolve to the raw value instead of the
+ * variable, so the fonts below can reference `next/font` variables.
+ */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-brand-50: oklch(0.97 0.021 152);
+  --color-brand-100: oklch(0.94 0.043 152);
+  --color-brand-200: oklch(0.89 0.082 152);
+  --color-brand-300: oklch(0.82 0.117 152);
+  --color-brand-400: oklch(0.75 0.145 152);
+  --color-brand-500: oklch(0.66 0.152 152);
+  --color-brand-600: oklch(0.57 0.134 152);
+  --color-brand-700: oklch(0.47 0.109 152);
+  --color-brand-800: oklch(0.38 0.085 152);
+  --color-brand-900: oklch(0.3 0.065 152);
+  --color-brand-950: oklch(0.2 0.045 152);
+}
+
+/*
+ * Semantic surface tokens. These are plain CSS variables (not `@theme`),
+ * because they swap between light and dark at runtime. Components read them
+ * through utilities like `bg-surface` / `text-ink`, which stay readable
+ * and mean the same thing in both themes.
+ */
+:root {
+  --surface-page: oklch(1 0 0);
+  --surface-raised: oklch(0.985 0.002 152);
+  --surface-sunken: oklch(0.96 0.004 152);
+
+  --ink-strong: oklch(0.21 0.01 152);
+  --ink-body: oklch(0.42 0.012 152);
+  --ink-muted: oklch(0.55 0.014 152);
+
+  --line-strong: oklch(0.9 0.006 152);
+  --line-soft: oklch(0.94 0.004 152);
+}
+
+.dark {
+  --surface-page: oklch(0.17 0.008 152);
+  --surface-raised: oklch(0.22 0.01 152);
+  --surface-sunken: oklch(0.14 0.007 152);
+
+  --ink-strong: oklch(0.97 0.006 152);
+  --ink-body: oklch(0.84 0.01 152);
+  --ink-muted: oklch(0.68 0.012 152);
+
+  --line-strong: oklch(0.31 0.012 152);
+  --line-soft: oklch(0.26 0.01 152);
+}
+
+@theme inline {
+  --color-page: var(--surface-page);
+  --color-raised: var(--surface-raised);
+  --color-sunken: var(--surface-sunken);
+  --color-ink: var(--ink-strong);
+  --color-ink-body: var(--ink-body);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line-strong);
+  --color-line-soft: var(--line-soft);
+}
+
+/* Base element defaults. */
+@layer base {
+  * {
+    border-color: var(--line-strong);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface-page);
+    color: var(--ink-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--ink-strong);
+    text-wrap: balance;
+  }
+
+  /* Visible focus for keyboard users, invisible for mouse users. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-200);
+    color: var(--ink-strong);
+  }
+
+  .dark ::selection {
+    background-color: var(--color-brand-800);
+    color: var(--ink-strong);
+  }
+}
+
+/*
+ * Respect the OS "reduce motion" setting. `!important` is required here to
+ * override animations declared by third-party components, which we cannot
+ * restyle at a higher specificity.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore-start lint/complexity/noImportantStyles: must override third-party animation specificity */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: must override third-party animation specificity */
+  }
+}
